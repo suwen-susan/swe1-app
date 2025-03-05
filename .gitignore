@@ -3,3 +3,12 @@
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+.git
+.gitignore
+
+__pycache__/
+*.pyc
+
+*.sqlite3
+*.log

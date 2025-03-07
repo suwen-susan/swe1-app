@@ -26,7 +26,7 @@ deploy:
   region: "us-east-1"            
   app: "django-tutorial"         
   env: "django-env"              
-  bucket_name: "your-s3-bucket"  
+  bucket_name: "elasticbeanstalk-us-east-1-715841372052 "  
   bucket_path: "django-tutorial" 
   on:
-    branch: master
+    branch: main

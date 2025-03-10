@@ -39,19 +39,6 @@ jobs:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
       run: coveralls
 
-    # - name: Deploy to Elastic Beanstalk
-    #   uses: aws-actions/elastic-beanstalk-deploy@v1
-    #   with:
-    #     region: "us-east-1"
-    #     application-name: "django-tutorial"
-    #     environment-name: "django-env"
-    #     version-label: "build-${{ github.run_number }}-${{ github.sha }}"
-    #     source-bundle: "./"
-
-    #   env:
-    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v2
       with:

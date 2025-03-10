@@ -1,0 +1,52 @@
+name: CI/CD for Django
+
+on:
+  push:
+    branches: [ "main" ]  
+  pull_request:
+    branches: [ "main" ] 
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.9"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install black flake8 coverage coveralls
+
+    - name: Run Black check
+      run: black --check .
+
+    - name: Run Flake8
+      run: flake8 .
+
+    - name: Run tests with coverage
+      run: coverage run --source=mysite manage.py test
+
+    - name: Report coverage to Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      run: coveralls
+
+    - name: Deploy to Elastic Beanstalk
+      uses: aws-actions/elastic-beanstalk-deploy@v1
+      with:
+        region: "us-east-1"
+        application-name: "django-tutorial"
+        environment-name: "django-env"
+        version-label: "build-${{ github.run_number }}-${{ github.sha }}"
+        source-bundle: "./"
+
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

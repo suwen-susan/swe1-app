@@ -52,8 +52,12 @@ jobs:
     #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
     #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
+    - name: List EB config folder
+      run: ls -la .elasticbeanstalk/
+    - name: Display EB config file
+      run: cat .elasticbeanstalk/config.yml
+
     - name: Deploy to Elastic Beanstalk
-      run: |
-        eb deploy django-env
+      run: eb deploy django-env
 
 
